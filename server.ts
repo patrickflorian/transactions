@@ -16,7 +16,7 @@ const handle = app.getRequestHandler()
 
 // All app routes
 app.prepare().then(() => {
-    models.sequelize.sync().then((result: any) => {
+    // models.sequelize.sync().then((result: any) => {
         let task = initScheduler();
         createServer(async (req: NextApiRequest, res: NextApiResponse) => {
             try {
@@ -42,6 +42,6 @@ app.prepare().then(() => {
             console.log(`> Ready on http://${hostname}:${port}`)
         });
         task.start();
-    })
+    // })
 
 })

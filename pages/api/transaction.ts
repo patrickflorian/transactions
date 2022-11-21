@@ -14,6 +14,11 @@ const cors = Cors({
  *   schemas:
  *     TransactionObject:
  *       type: object
+ *       required:
+ *         value
+ *         sender
+ *         timestamp
+ *         receiver
  *       properties:
  *         id:
  *           type: string
@@ -38,7 +43,63 @@ const cors = Cors({
  *         confirmed:
  *           type: boolean
  *           description: Transaction status.
- *           example: true  
+ *           example: true
+ *         createdAt:
+ *           type: string
+ *           example: "2022-11-21T19:35:00.000Z" 
+ *         updatedAt:
+ *           type: string
+ *           example: "2022-11-21T19:35:00.000Z" 
+ *     TransactionRequestObject:
+ *       type: object
+ *       required:
+ *         value
+ *         sender
+ *         timestamp
+ *         receiver
+ *       properties:
+ *         value:
+ *           type: number
+ *           description: The transaction amount.
+ *           example: "100000"
+ *         timestamp:
+ *           type: number
+ *           description: The transaction time.
+ *           example: "100000"
+ *         receiver:
+ *           type: string
+ *           description: receiver name.
+ *           example: "John doe"
+ *         sender:
+ *           type: string
+ *           description: sender name.
+ *           example: "John doe"
+ *         confirmed:
+ *           type: boolean
+ *           description: Transaction status.
+ *           example: true 
+ *     TransactionResponseObject:
+ *       type: object
+ *       properties:
+ *         totalItems:
+ *           type: number
+ *           description: The transaction amount.
+ *           example: "100000"
+ *         totalPages:
+ *           type: number
+ *           description: The transaction time.
+ *           example: "100000"
+ *         currentPage:
+ *           type: number
+ *           description: receiver name.
+ *           example: 3
+ *         items:
+ *           type: array
+ *           items:
+ *             $ref: '#/components/schemas/TransactionObject'
+ * tags:
+ *   - name: transaction
+ *     description: transaction namespace
  */
 // Adding cors middleware
 function runMiddleware(
@@ -61,15 +122,51 @@ function runMiddleware(
  * @swagger
  * /api/transaction:
  *   get:
+ *     tags:
+ *       - transaction
  *     description: Returns all the transactions
+ *     parameters:
+ *       - in: query
+ *         name: page
+ *         description: page
+ *         required: false
+ *         schema:
+ *           type: string
+ *       - in: query
+ *         name: per_page
+ *         description: Elements per pages
+ *         required: false
+ *         schema:
+ *           type: string
+ *       - in: query
+ *         name: name
+ *         description: Receiver or sender name
+ *         required: false
+ *         schema:
+ *           type: string
  *     responses:
  *       200:
- *         description: hello world
+ *         description: ok
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/TransactionResponseObject'
  *   post:
+ *     tags:
+ *       - transaction
  *     description: create a transactions
  *     responses:
  *       200:
- *         description: hello world
+ *         description: ok
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/TransactionObject' 
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/TransactionRequestObject'
  */
 export default async function handler(
     req: NextApiRequest,

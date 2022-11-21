@@ -29,21 +29,61 @@ function runMiddleware(
  * @swagger
  * /api/transaction/{id}:
  *   get:
- *     description: Returns the specified transaction  
+ *     tags:
+ *       - transaction
+ *     description: Returns the specified transaction
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         description: Transaction unique identifier
+ *         required: true
+ *         schema:
+ *           type: string
  *     responses:
  *       200:
  *         description: transaction found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/TransactionObject'
  *       404:
  *         description: transaction not found
  *   put:
+ *     tags:
+ *       - transaction
  *     description: update a transaction
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         description: Transaction unique identifier
+ *         required: true
+ *         schema:
+ *           type: string
  *     responses:
  *       200:
  *         description: successfully updated
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/TransactionObject'
  *       404:
- *         description: transaction not found
+ *         description: transaction not found 
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/TransactionRequestObject'
  *   delete:
+ *     tags:
+ *       - transaction
  *     description: delete a transaction
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         description: Transaction unique identifier
+ *         required: true
+ *         schema:
+ *           type: string
  *     responses:
  *       200:
  *         description: successfully deleted
