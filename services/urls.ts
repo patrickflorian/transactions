@@ -1,5 +1,5 @@
 
-const prefixer = 'localhost:3000/api';
+const prefixer = 'http://localhost:3000/api/';
 
 export const transactionUrls = {
     LIST: (range: any)=> `${prefixer}transaction?page=${range?.page ?? 1}&per_page=${

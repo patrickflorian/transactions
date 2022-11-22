@@ -24,6 +24,7 @@ export interface Transaction{
     receiver:  number;
     timestamp: number;
     sender: number;
+    confirmed: boolean;
     createdAt: string;
     updatedAt: string;
 }
